@@ -16,6 +16,11 @@ public abstract class Card implements Cloneable {
 		this.rarity = rarity;
 	}
 
+	@Override
+	public String toString() {
+		return "Card [name=" + name + "]";
+	}
+
 	public int getManaCost() {
 		return manaCost;
 	}

@@ -8,7 +8,7 @@ public class mainTest {
 	public static void main(String[] args) throws IOException {
 		Hero a=  new Hunter();
 		if (a instanceof Hero)
-		    System.out.println("it works");
+		    System.out.println(a.getDeck());
 
 	}
 
