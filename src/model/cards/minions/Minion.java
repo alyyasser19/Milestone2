@@ -2,6 +2,9 @@ package model.cards.minions;
 
 import model.cards.Card;
 import model.cards.Rarity;
+import model.heroes.*;
+import exceptions.*;
+
 
 public class Minion extends Card implements Cloneable {
 	private int attack;
@@ -28,6 +31,33 @@ public class Minion extends Card implements Cloneable {
 		this.divine = divine;
 		if (!charge)
 			this.sleeping = true;
+	}
+	public void attack(Minion target) {
+		if(target.divine) {
+			if(this.divine)
+				return;
+			else
+				this.currentHP-=target.attack;
+			return;
+		}else {
+			target.currentHP-=this.attack;
+			if(this.divine)
+				return;
+			else
+				this.currentHP-=target.attack;
+		}
+	}
+	public void attack(Hero target) throws InvalidTargetException{
+		if(this instanceof Icehowl) {
+			throw new InvalidTargetException("Icehowl can only attack minions");
+		}else {
+			target.setCurrentHP(getCurrentHP()-this.attack);
+		}
+		
+	}	
+	@Override
+	public Minion clone() throws CloneNotSupportedException {
+		return (Minion) super.clone();
 	}
 
 	public boolean isTaunt() {

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import engine.ActionValidator;
 import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Icehowl;
@@ -21,7 +23,19 @@ public abstract class Hero implements MinionListener{
 	private ArrayList<Card> hand;
 	@SuppressWarnings("unused")
 	private int fatigueDamage;
+	private HeroListener listener;
+	@SuppressWarnings("unused")
+	private ActionValidator validator;
 
+	public HeroListener getListener() {
+		return listener;
+	}
+	public void setListener(HeroListener listener) {
+		this.listener = listener;
+	}
+	public void setValidator(ActionValidator validator) {
+		this.validator = validator;
+	}
 	public Hero(String name) throws IOException {
 		this.name = name;
 		currentHP = 30;
@@ -99,13 +113,29 @@ public abstract class Hero implements MinionListener{
 			}
 			if (occ == 0)
 			{
+				if(res.contains(minion)) {
+					try {
+						res.add(minion.clone());
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
+					i++;
+				}else {
 				res.add(minion);
-				i++;
+				i++;}
 			}
 			else if(occ==1 && minion.getRarity()!=Rarity.LEGENDARY)
 			{
+				if(res.contains(minion)) {
+					try {
+						res.add(minion.clone());
+					} catch (CloneNotSupportedException e) {
+						e.printStackTrace();
+					}
+					i++;
+				}else {
 				res.add(minion);
-				i++;
+				i++;}
 			}
 		}
 		return res;
