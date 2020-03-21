@@ -19,6 +19,8 @@ public class Game implements ActionValidator, HeroListener  {
 	private Hero secondHero;
 	private Hero currentHero;
 	private Hero opponent;
+	@SuppressWarnings("unused")
+	private GameListener listener;
 	
 	public Game(Hero p1, Hero p2)
 	{
