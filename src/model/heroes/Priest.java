@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import exceptions.FullFieldException;
+import exceptions.FullHandException;
+import exceptions.HeroPowerAlreadyUsedException;
+import exceptions.NotEnoughManaException;
+import exceptions.NotYourTurnException;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.DivineSpirit;
@@ -32,6 +37,23 @@ public class Priest extends Hero {
 		Collections.shuffle(getDeck());
 
 	}
+	public void useHeroPower(Object target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+			FullHandException, FullFieldException, CloneNotSupportedException {
+		super.useHeroPower();
+		int heal= 2;
+		for(Minion M: this.getField()) {
+			if(M.getName().equals("Prophet Velen"))
+				heal=8;
+		}
+		if(target instanceof Minion) {
+			Minion m= (Minion)target;
+				m.setCurrentHP(getCurrentHP()+heal);
+									 }
+		if(target instanceof Hero) {
+			Hero h = (Hero) target;
+			h.setCurrentHP(getCurrentHP()+heal);
+	}
+		}
 	
 
 }

@@ -4,12 +4,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import exceptions.FullFieldException;
+import exceptions.FullHandException;
+import exceptions.HeroPowerAlreadyUsedException;
+import exceptions.NotEnoughManaException;
+import exceptions.NotYourTurnException;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.LevelUp;
 import model.cards.spells.SealOfChampions;
 
 public class Paladin extends Hero {
+	@Override
+	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+			FullHandException, FullFieldException, CloneNotSupportedException {
+		super.useHeroPower();
+		Minion recruit = new Minion("Silver Hand Recruit", 1, Rarity.BASIC, 1, 1, false, false, false);
+		if(getField().size()==7)
+			throw new FullFieldException("your field is full");
+		else {
+			for(Minion m: getField()) {
+				if(m.getName().equals("Silver Hand Recruit")) {
+					getField().add(recruit.clone());
+					return;}}
+			getField().add(recruit);
+		}}
+
 	public Paladin() throws IOException
 	{
 		super("Uther Lightbringer");

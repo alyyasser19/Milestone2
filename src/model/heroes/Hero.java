@@ -11,6 +11,12 @@ import model.cards.Rarity;
 import model.cards.minions.Icehowl;
 import model.cards.minions.Minion;
 import model.cards.minions.MinionListener;
+import model.cards.spells.AOESpell;
+import model.cards.spells.FieldSpell;
+import model.cards.spells.HeroTargetSpell;
+import model.cards.spells.LeechingSpell;
+import model.cards.spells.MinionTargetSpell;
+import exceptions.*;
 
 public abstract class Hero implements MinionListener{
 	private String name;
@@ -21,10 +27,8 @@ public abstract class Hero implements MinionListener{
 	private ArrayList<Card> deck;
 	private ArrayList<Minion> field;
 	private ArrayList<Card> hand;
-	@SuppressWarnings("unused")
-	private int fatigueDamage;
+	private static int fatigueDamage=0;
 	private HeroListener listener;
-	@SuppressWarnings("unused")
 	private ActionValidator validator;
 
 	public HeroListener getListener() {
@@ -43,12 +47,107 @@ public abstract class Hero implements MinionListener{
 		field = new ArrayList<Minion>();
 		hand = new ArrayList<Card>();
 		buildDeck();
-		for(Card a: deck) {
+		for(Card a: deck) 
 			if(a instanceof Minion)
-				((Minion) a).setListener(this);
+				((Minion) a).setListener(this);	
 		}
-			
+
+	public void useHeroPower() throws NotEnoughManaException,
+	HeroPowerAlreadyUsedException, NotYourTurnException, FullHandException,
+	FullFieldException, CloneNotSupportedException{
+		validator.validateTurn(this);
+		validator.validateUsingHeroPower(this);
+		currentManaCrystals=currentManaCrystals-2;
 	}
+	public void playMinion(Minion m) throws NotYourTurnException,
+	NotEnoughManaException, FullFieldException{
+		validator.validateTurn(this);
+		validator.validateManaCost((Card)m);
+		validator.validatePlayingMinion(m);
+		getHand().remove(m);
+		getField().add(m);
+	}
+	public void attackWithMinion(Minion attacker, Minion target) throws
+	CannotAttackException, NotYourTurnException, TauntBypassException,
+	InvalidTargetException, NotSummonedException{
+		validator.validateTurn(this);
+		validator.validateAttack(attacker, target);
+		attacker.attack(target);
+	}
+	 public void attackWithMinion(Minion attacker, Hero target) throws
+	 CannotAttackException, NotYourTurnException, TauntBypassException,
+	 NotSummonedException, InvalidTargetException{
+			validator.validateTurn(this);
+			validator.validateAttack(attacker, target);
+			attacker.attack(target);
+	 }
+	 public void castSpell(FieldSpell s) throws NotYourTurnException,
+	 NotEnoughManaException{
+		 validator.validateTurn(this);
+		 for(Minion me: this.getField()) {
+			 if(me.getName().equals("Kalycgos"))
+			((Card)s).setManaCost(((Card)s).getManaCost()-4);
+		 }
+		 validator.validateManaCost((Card)s);
+		 s.performAction(this.getField());
+		 
+	 }
+	 public void castSpell(AOESpell s, ArrayList<Minion >oppField) throws
+	 NotYourTurnException, NotEnoughManaException{
+		 validator.validateTurn(this);
+		 for(Minion me: this.getField()) {
+			 if(me.getName().equals("Kalycgos"))
+			((Card)s).setManaCost(((Card)s).getManaCost()-4);
+		 }
+		 validator.validateManaCost((Card)s);
+		 s.performAction(oppField, this.getField());
+	 }
+	 public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException,
+	 NotEnoughManaException, InvalidTargetException{
+		 validator.validateTurn(this);
+		 for(Minion me: this.getField()) {
+			 if(me.getName().equals("Kalycgos"))
+			((Card)s).setManaCost(((Card)s).getManaCost()-4);
+		 }
+		 validator.validateManaCost((Card)s);
+		 s.performAction(m);
+	 }
+	 public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException,
+	 NotEnoughManaException{
+		 validator.validateTurn(this);
+		 for(Minion me: this.getField()) {
+			 if(me.getName().equals("Kalycgos"))
+			((Card)s).setManaCost(((Card)s).getManaCost()-4);
+		 }
+		 validator.validateManaCost((Card)s);
+		 s.performAction(h);
+	 }
+	 public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException,
+	 NotEnoughManaException{
+		 validator.validateTurn(this);
+		 for(Minion me: this.getField()) {
+			 if(me.getName().equals("Kalycgos"))
+			((Card)s).setManaCost(((Card)s).getManaCost()-4);
+		 }
+		 validator.validateManaCost((Card)s);
+		 s.performAction(m);
+	 }
+	 
+	 public void endTurn() throws FullHandException, CloneNotSupportedException{
+		 listener.endTurn();
+	 }
+	 public Card drawCard() throws FullHandException, CloneNotSupportedException{
+		 if(getHand().size()==10) {
+			 throw new FullHandException("too bad card got burned",getDeck().remove(0));
+		 }
+		 if(getDeck().isEmpty()) {
+			 fatigueDamage+=1;
+			 setCurrentHP(getCurrentHP()-fatigueDamage);
+			 return null;
+		 }
+			 return getDeck().remove(0);
+			 
+	 }
 	public abstract void buildDeck() throws IOException;
 	public void onMinionDeath(Minion m) {
 		this.field.remove(m);

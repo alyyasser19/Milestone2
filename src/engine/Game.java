@@ -133,10 +133,17 @@ public class Game implements ActionValidator, HeroListener  {
 			currentHero.setTotalManaCrystals(currentHero.getTotalManaCrystals()+1);
 			currentHero.setCurrentManaCrystals(currentHero.getTotalManaCrystals());
 			currentHero.setHeroPowerUsed(false);
+			Card card= getCurrentHero().drawCard();
 			for(Minion a:currentHero.getField()) {
 				a.setAttacked(false);
-				a.setSleeping(false);}
-			//Draw a card to be added
+				a.setSleeping(false);
+				if(a.getName().equals("Chromaggus")) {
+				getCurrentHero().getDeck().add(card);
+				getCurrentHero().getDeck().add(card.clone());
+				return;
+				}
+				}
+			getCurrentHero().getDeck().add(card);
 			
 		
 	}

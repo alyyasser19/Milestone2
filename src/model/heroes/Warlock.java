@@ -4,6 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import exceptions.FullFieldException;
+import exceptions.FullHandException;
+import exceptions.HeroPowerAlreadyUsedException;
+import exceptions.NotEnoughManaException;
+import exceptions.NotYourTurnException;
+import model.cards.Card;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.CurseOfWeakness;
@@ -11,6 +17,27 @@ import model.cards.spells.SiphonSoul;
 import model.cards.spells.TwistingNether;
 
 public class Warlock extends Hero {
+
+	@Override
+	public void useHeroPower() throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+			FullHandException, FullFieldException, CloneNotSupportedException {
+		super.useHeroPower();
+		Card s= drawCard();
+		for(Minion m: this.getField()) {
+			if(m.getName().equals("Wilfred Fizzlebang")){
+				s.setManaCost(0);
+				break;
+			}
+			}
+		this.getDeck().add(s);
+			for(Minion m: this.getField()) {
+				if(m.getName().equals("Chromaggus")){
+					this.getDeck().add(s.clone());
+					}
+				}
+		
+
+	}
 
 	public Warlock() throws IOException {
 		super("Gul'dan");

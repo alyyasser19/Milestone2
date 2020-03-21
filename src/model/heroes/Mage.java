@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import exceptions.FullFieldException;
+import exceptions.FullHandException;
+import exceptions.HeroPowerAlreadyUsedException;
+import exceptions.NotEnoughManaException;
+import exceptions.NotYourTurnException;
 import model.cards.Rarity;
 import model.cards.minions.Minion;
 import model.cards.spells.Flamestrike;
@@ -30,6 +35,23 @@ public class Mage extends Hero {
 		getDeck().add(kalycgos);
 		Collections.shuffle(getDeck());
 
+	}
+	public void useHeroPower(Object target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+			FullHandException, FullFieldException, CloneNotSupportedException {
+		//doesn't throw invalid target exception for some reason (target friendly minion or if there is taunt in the way??).
+		super.useHeroPower();
+		if(target instanceof Minion) {
+			Minion m= (Minion)target;
+			if(m.isDivine())
+				m.setDivine(false);
+			else
+				m.setCurrentHP(getCurrentHP()-1);
+									 }
+		if(target instanceof Hero) {
+			Hero h = (Hero) target;
+			h.setCurrentHP(getCurrentHP()-1);
+		}
+			
 	}
 
 	

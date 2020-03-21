@@ -34,15 +34,18 @@ public class Minion extends Card implements Cloneable {
 	}
 	public void attack(Minion target) {
 		if(target.divine) {
-			if(this.divine)
-				return;
+			target.divine=false;
+			if(this.divine) {
+				this.divine=false;
+				return;}
 			else
 				this.currentHP-=target.attack;
 			return;
 		}else {
 			target.currentHP-=this.attack;
-			if(this.divine)
-				return;
+			if(this.divine) {
+				this.divine=false;
+				return;}
 			else
 				this.currentHP-=target.attack;
 		}
