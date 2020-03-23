@@ -68,7 +68,6 @@ public class Game implements ActionValidator, HeroListener  {
 		if(currentHero.getField().contains(target))
 			throw new InvalidTargetException("What exactly are you trying to do here..? The enemy is over there..");
 		
-		
 	}
 
 	@Override
@@ -84,7 +83,8 @@ public class Game implements ActionValidator, HeroListener  {
 			throw new NotSummonedException("Nice Try....");
 		if(target.equals(currentHero))
 			throw new InvalidTargetException("What exactly are you trying to do here..? The enemy is over there..");
-		
+		if(attacker.getName().equals("Icehowl"))
+			throw new InvalidTargetException("Howl can only attack minions");
 	}
 
 	@Override
