@@ -73,6 +73,10 @@ public class Game implements ActionValidator, HeroListener  {
 	@Override
 	public void validateAttack(Minion attacker, Hero target)
 			throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
+		for(Minion a : opponent.getField()) {
+			if(a.isTaunt())
+				throw new TauntBypassException("A minion with taunt is in the way!");
+		}
 		if(attacker.getAttack()==0)
 			throw new CannotAttackException("your minion has 0 attack, are you mad!!!");
 		if(attacker.isSleeping())
