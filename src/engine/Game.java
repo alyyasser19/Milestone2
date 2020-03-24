@@ -80,7 +80,7 @@ public class Game implements ActionValidator, HeroListener  {
 		if(attacker.getAttack()==0)
 			throw new CannotAttackException("your minion has 0 attack, are you mad!!!");
 		if(attacker.isSleeping())
-			throw new CannotAttackException("Not this turn, Minion is sleeping ZzZzZ");
+			throw new CannotAttackException();
 		if(attacker.isAttacked())
 			throw new CannotAttackException("This Minion can't attack anymore,Wait till your next turn");
 		if(!currentHero.getField().contains(attacker))
@@ -89,6 +89,10 @@ public class Game implements ActionValidator, HeroListener  {
 			throw new InvalidTargetException("What exactly are you trying to do here..? The enemy is over there..");
 		if(attacker.getName().equals("Icehowl"))
 			throw new InvalidTargetException("Howl can only attack minions");
+	}
+
+	public void setListener(GameListener listener) {
+		this.listener = listener;
 	}
 
 	@Override
@@ -116,8 +120,7 @@ public class Game implements ActionValidator, HeroListener  {
 
 	@Override
 	public void onHeroDeath() {
-		if(currentHero.getCurrentHP()==0 || opponent.getCurrentHP()==0)
-			System.out.println("do nothing for now");//still not implemented
+			listener.onGameOver();
 		
 	}
 

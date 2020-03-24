@@ -73,6 +73,7 @@ public abstract class Hero implements MinionListener{
 		validator.validateTurn(this);
 		validator.validateAttack(attacker, target);
 		attacker.attack(target);
+
 	}
 	 public void attackWithMinion(Minion attacker, Hero target) throws
 	 CannotAttackException, NotYourTurnException, TauntBypassException,
@@ -150,7 +151,8 @@ public abstract class Hero implements MinionListener{
 	 }
 	public abstract void buildDeck() throws IOException;
 	public void onMinionDeath(Minion m) {
-		this.field.remove(m);
+		if(!this.getField().isEmpty())
+		this.getField().remove(m);
 	}
 
 	public static final ArrayList<Minion> getAllNeutralMinions(String filePath) throws IOException {
