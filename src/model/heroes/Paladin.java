@@ -30,7 +30,7 @@ public class Paladin extends Hero {
 			getField().add(recruit);
 		}}
 
-	public Paladin() throws IOException
+	public Paladin() throws IOException, CloneNotSupportedException
 	{
 		super("Uther Lightbringer");
 	}

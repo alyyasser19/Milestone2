@@ -40,7 +40,7 @@ public abstract class Hero implements MinionListener{
 	public void setValidator(ActionValidator validator) {
 		this.validator = validator;
 	}
-	public Hero(String name) throws IOException {
+	public Hero(String name) throws IOException, CloneNotSupportedException {
 		this.name = name;
 		currentHP = 30;
 		deck = new ArrayList<Card>();
@@ -149,7 +149,7 @@ public abstract class Hero implements MinionListener{
 			 return getDeck().remove(0);
 			 
 	 }
-	public abstract void buildDeck() throws IOException;
+	public abstract void buildDeck() throws IOException, CloneNotSupportedException;
 	public void onMinionDeath(Minion m) {
 		if(!this.getField().isEmpty())
 		this.getField().remove(m);
