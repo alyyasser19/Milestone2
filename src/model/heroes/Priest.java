@@ -37,7 +37,7 @@ public class Priest extends Hero {
 		Collections.shuffle(getDeck());
 
 	}
-	public void useHeroPower(Object target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
 			FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 		int heal= 2;
@@ -47,13 +47,19 @@ public class Priest extends Hero {
 		}
 		if(target instanceof Minion) {
 			Minion m= (Minion)target;
-				m.setCurrentHP(getCurrentHP()+heal);
+				m.setCurrentHP(m.getCurrentHP()+heal);
 									 }
-		if(target instanceof Hero) {
-			Hero h = (Hero) target;
-			h.setCurrentHP(getCurrentHP()+heal);
-	}
+
 		}
 	
-
+	public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+	FullHandException, FullFieldException, CloneNotSupportedException {
+super.useHeroPower();
+int heal= 2;
+for(Minion M: this.getField()) {
+	if(M.getName().equals("Prophet Velen"))
+		heal=8;
+}
+target.setCurrentHP(target.getCurrentHP()+heal);
+	}
 }

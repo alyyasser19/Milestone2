@@ -36,7 +36,7 @@ public class Mage extends Hero {
 		Collections.shuffle(getDeck());
 
 	}
-	public void useHeroPower(Object target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+	public void useHeroPower(Minion target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
 			FullHandException, FullFieldException, CloneNotSupportedException {
 		//doesn't throw invalid target exception for some reason (target friendly minion or if there is taunt in the way??).
 		super.useHeroPower();
@@ -45,15 +45,19 @@ public class Mage extends Hero {
 			if(m.isDivine())
 				m.setDivine(false);
 			else
-				m.setCurrentHP(getCurrentHP()-1);
+				m.setCurrentHP(m.getCurrentHP()-1);
 									 }
-		if(target instanceof Hero) {
-			Hero h = (Hero) target;
-			h.setCurrentHP(getCurrentHP()-1);
+	
 		}
+	public void useHeroPower(Hero target) throws NotEnoughManaException, HeroPowerAlreadyUsedException, NotYourTurnException,
+	FullHandException, FullFieldException, CloneNotSupportedException {
+		super.useHeroPower();
+		target.setCurrentHP(target.getCurrentHP()-1);
+		
+		
+	}
 			
 	}
 
 	
 
-}

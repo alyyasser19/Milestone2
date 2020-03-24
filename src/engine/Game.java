@@ -19,11 +19,13 @@ public class Game implements ActionValidator, HeroListener  {
 	private Hero secondHero;
 	private Hero currentHero;
 	private Hero opponent;
-	@SuppressWarnings("unused")
 	private GameListener listener;
 	
-	public Game(Hero p1, Hero p2)
+	public Game(Hero p1, Hero p2) throws FullHandException, CloneNotSupportedException
 	{
+		p1.setListener(this);
+		p2.setListener(this);
+		
 		firstHero=p1;
 		secondHero=p2;
 		
@@ -32,6 +34,10 @@ public class Game implements ActionValidator, HeroListener  {
 		opponent= currentHero==firstHero?secondHero:firstHero;
 		currentHero.setCurrentManaCrystals(1);
 		currentHero.setTotalManaCrystals(1);
+		for(int i=0;i<3;i++)
+		currentHero.getHand().add(currentHero.drawCard());
+		for(int i=0;i<4;i++)
+			opponent.getHand().add(opponent.drawCard());
 		
 	}
 
@@ -46,7 +52,7 @@ public class Game implements ActionValidator, HeroListener  {
 	@Override
 	public void validateTurn(Hero user) throws NotYourTurnException {
 		if(getCurrentHero()!=user)
-			throw new NotYourTurnException("This is not your turn!");
+			throw new NotYourTurnException();
 		
 	}
 
@@ -55,18 +61,21 @@ public class Game implements ActionValidator, HeroListener  {
 			throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
 		for(Minion a : opponent.getField()) {
 			if(a.isTaunt() && !target.isTaunt())
-				throw new TauntBypassException("A minion with taunt is in the way!");
+				throw new TauntBypassException();
 		}
 		if(attacker.getAttack()==0)
-			throw new CannotAttackException("your minion has 0 attack, are you mad!!!");
+			throw new CannotAttackException();
 		if(attacker.isSleeping())
-			throw new CannotAttackException("Not this turn, Minion is sleeping ZzZzZ");
+			throw new CannotAttackException();
 		if(attacker.isAttacked())
-			throw new CannotAttackException("This Minion can't attack anymore,Wait till your next turn");
+			throw new CannotAttackException();
 		if(!currentHero.getField().contains(attacker))
-			throw new NotSummonedException("Nice Try....");
+			throw new NotSummonedException();
 		if(currentHero.getField().contains(target))
-			throw new InvalidTargetException("What exactly are you trying to do here..? The enemy is over there..");
+			throw new InvalidTargetException();
+		if(!opponent.getField().contains(target))
+			throw new NotSummonedException();
+		
 		
 	}
 
@@ -75,20 +84,20 @@ public class Game implements ActionValidator, HeroListener  {
 			throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
 		for(Minion a : opponent.getField()) {
 			if(a.isTaunt())
-				throw new TauntBypassException("A minion with taunt is in the way!");
+				throw new TauntBypassException();
 		}
 		if(attacker.getAttack()==0)
-			throw new CannotAttackException("your minion has 0 attack, are you mad!!!");
+			throw new CannotAttackException();
 		if(attacker.isSleeping())
 			throw new CannotAttackException();
 		if(attacker.isAttacked())
-			throw new CannotAttackException("This Minion can't attack anymore,Wait till your next turn");
+			throw new CannotAttackException();
 		if(!currentHero.getField().contains(attacker))
-			throw new NotSummonedException("Nice Try....");
+			throw new NotSummonedException();
 		if(target.equals(currentHero))
-			throw new InvalidTargetException("What exactly are you trying to do here..? The enemy is over there..");
+			throw new InvalidTargetException();
 		if(attacker.getName().equals("Icehowl"))
-			throw new InvalidTargetException("Howl can only attack minions");
+			throw new InvalidTargetException();
 	}
 
 	public void setListener(GameListener listener) {
@@ -98,23 +107,23 @@ public class Game implements ActionValidator, HeroListener  {
 	@Override
 	public void validateManaCost(Card card) throws NotEnoughManaException {
 		if(card.getManaCost()>currentHero.getCurrentManaCrystals())
-			throw new NotEnoughManaException("Not Enough Mana");
+			throw new NotEnoughManaException();
 		
 	}
 
 	@Override
 	public void validatePlayingMinion(Minion minion) throws FullFieldException {
 		if(currentHero.getField().size()==7)
-			throw new FullFieldException("Your Field is full!!");
+			throw new FullFieldException();
 		
 	}
 
 	@Override
 	public void validateUsingHeroPower(Hero hero) throws NotEnoughManaException, HeroPowerAlreadyUsedException {
 		if(hero.isHeroPowerUsed())
-			throw new HeroPowerAlreadyUsedException("already used that this turn");
+			throw new HeroPowerAlreadyUsedException();
 		if(hero.getCurrentManaCrystals()<2)
-			throw new NotEnoughManaException("Not enough mana");
+			throw new NotEnoughManaException();
 		
 	}
 
@@ -152,7 +161,6 @@ public class Game implements ActionValidator, HeroListener  {
 				return;
 				}
 				}
-			getCurrentHero().getDeck().add(card);
 			
 		
 	}
