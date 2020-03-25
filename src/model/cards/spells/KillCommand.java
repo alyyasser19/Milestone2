@@ -13,13 +13,13 @@ public class KillCommand extends Spell implements MinionTargetSpell, HeroTargetS
 	}
 	public void performAction(Hero h) {
 		int cHP=h.getCurrentHP();
-		h.setCurrentHP((cHP-5));
+		h.setCurrentHP((cHP-3));
 		
 	}
 	
 	public void performAction(Minion m) throws InvalidTargetException {
 		int cHP=m.getCurrentHP();
-		m.setCurrentHP((cHP-3));
+		m.setCurrentHP((cHP-5));
 		
 	}
 }

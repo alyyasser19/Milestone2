@@ -83,7 +83,8 @@ public abstract class Hero implements MinionListener{
 			validator.validateAttack(attacker, target);
 			attacker.attack(target);
 	 }
-	 public void castSpell(FieldSpell s) throws NotYourTurnException,
+	 @SuppressWarnings("unlikely-arg-type")
+	public void castSpell(FieldSpell s) throws NotYourTurnException,
 	 NotEnoughManaException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
@@ -96,7 +97,8 @@ public abstract class Hero implements MinionListener{
 		 hand.remove(s);
 		 
 	 }
-	 public void castSpell(AOESpell s, ArrayList<Minion >oppField) throws
+	 @SuppressWarnings("unlikely-arg-type")
+	public void castSpell(AOESpell s, ArrayList<Minion >oppField) throws
 	 NotYourTurnException, NotEnoughManaException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
@@ -108,7 +110,8 @@ public abstract class Hero implements MinionListener{
 		 currentManaCrystals=currentManaCrystals-((Card)s).getManaCost();
 		 hand.remove(s);
 	 }
-	 public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException,
+	 @SuppressWarnings("unlikely-arg-type")
+	public void castSpell(MinionTargetSpell s, Minion m) throws NotYourTurnException,
 	 NotEnoughManaException, InvalidTargetException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
@@ -120,7 +123,8 @@ public abstract class Hero implements MinionListener{
 		 currentManaCrystals=currentManaCrystals-((Card)s).getManaCost();
 		 hand.remove(s);
 	 }
-	 public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException,
+	 @SuppressWarnings("unlikely-arg-type")
+	public void castSpell(HeroTargetSpell s, Hero h) throws NotYourTurnException,
 	 NotEnoughManaException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
@@ -132,7 +136,8 @@ public abstract class Hero implements MinionListener{
 		 currentManaCrystals=currentManaCrystals-((Card)s).getManaCost();
 		 hand.remove(s);
 	 }
-	 public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException,
+	 @SuppressWarnings("unlikely-arg-type")
+	public void castSpell(LeechingSpell s, Minion m) throws NotYourTurnException,
 	 NotEnoughManaException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
@@ -140,7 +145,8 @@ public abstract class Hero implements MinionListener{
 			((Card)s).setManaCost(((Card)s).getManaCost()-4);
 		 }
 		 validator.validateManaCost((Card)s);
-		 s.performAction(m);
+		 int x=s.performAction(m);
+		 currentHP=currentHP+x;
 		 currentManaCrystals=currentManaCrystals-((Card)s).getManaCost();
 		 hand.remove(s);
 	 }

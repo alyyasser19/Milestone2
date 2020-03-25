@@ -13,14 +13,17 @@ public class Pyroblast extends Spell implements HeroTargetSpell, MinionTargetSpe
 
 	public void performAction(Minion m) throws InvalidTargetException {
 		int cHP=m.getCurrentHP();
-		m.setCurrentHP((cHP-10));
+		if(m.isDivine()){
+			m.setDivine(false);}
+		else{
+			m.setCurrentHP((cHP-10));}
 		
 	}
 
 	public void performAction(Hero h) {
 		int cHP=h.getCurrentHP();
-		h.setCurrentHP((cHP-10));
-		
-	}
+	h.setCurrentHP((cHP-10));}
 	
 }
+	
+

@@ -13,26 +13,9 @@ public class TwistingNether extends Spell implements AOESpell {
 	}
 
 	public void performAction(ArrayList<Minion> oppField, ArrayList<Minion> curField) {
-		boolean flag=false;
-		for(Minion i:oppField){
-			if(i.isDivine()){
-				flag=true;
-				break;}
-								}
-		if(!flag){
-			for(Minion j:curField){
-				if(j.isDivine()){
-					flag=true;
-					break;}
-		}
-		if(flag){
-			oppField.clear();
-			curField.clear();
-			
-		}
-		}
-		}
-	}
+		oppField.clear();
+		curField.clear();
+	}}
 		
 	
 

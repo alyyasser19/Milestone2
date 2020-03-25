@@ -136,4 +136,6 @@ public class Minion extends Card implements Cloneable {
 		return divine;
 	}
 
+	
+
 }

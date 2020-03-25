@@ -10,13 +10,12 @@ public class DivineSpirit extends Spell implements MinionTargetSpell {
 	}
 	
 	public void performAction(Minion m){
+		int mHP=m.getMaxHP();
+		m.setMaxHP(2*mHP);
 		int cHP=m.getCurrentHP();
 		m.setCurrentHP(2*cHP);
-		int mHP=m.getMaxHP();
-		m.setCurrentHP(2*mHP);
+		
 		
 	}
-
-	
 
 }
