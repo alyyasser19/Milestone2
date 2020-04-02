@@ -21,7 +21,7 @@ public class Paladin extends Hero {
 		super.useHeroPower();
 		Minion recruit = new Minion("Silver Hand Recruit", 1, Rarity.BASIC, 1, 1, false, false, false);
 		if(getField().size()==7)
-			throw new FullFieldException("your field is full");
+			throw new FullFieldException();
 		else {
 			for(Minion m: getField()) {
 				if(m.getName().equals("Silver Hand Recruit")) {

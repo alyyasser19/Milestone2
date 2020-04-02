@@ -24,7 +24,9 @@ public class Game implements ActionValidator, HeroListener  {
 	public Game(Hero p1, Hero p2) throws FullHandException, CloneNotSupportedException
 	{
 		p1.setListener(this);
+		p1.setValidator(this);
 		p2.setListener(this);
+		p2.setValidator(this);
 		
 		firstHero=p1;
 		secondHero=p2;
@@ -151,15 +153,10 @@ public class Game implements ActionValidator, HeroListener  {
 			currentHero.setTotalManaCrystals(currentHero.getTotalManaCrystals()+1);
 			currentHero.setCurrentManaCrystals(currentHero.getTotalManaCrystals());
 			currentHero.setHeroPowerUsed(false);
-			Card card= getCurrentHero().drawCard();
+			getCurrentHero().drawCard();
 			for(Minion a:currentHero.getField()) {
 				a.setAttacked(false);
 				a.setSleeping(false);
-				if(a.getName().equals("Chromaggus")) {
-				getCurrentHero().getDeck().add(card);
-				getCurrentHero().getDeck().add(card.clone());
-				return;
-				}
 				}
 			
 		
