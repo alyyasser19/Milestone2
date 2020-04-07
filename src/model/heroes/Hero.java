@@ -88,7 +88,7 @@ public abstract class Hero implements MinionListener{
 	 NotEnoughManaException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
-			 if(me.getName().equals("Kalycgos"))
+			 if(me.getName().equals("Kalycgos") && this instanceof Mage)
 			((Card)s).setManaCost(((Card)s).getManaCost()-4);
 		 }
 		 validator.validateManaCost((Card)s);
@@ -102,7 +102,7 @@ public abstract class Hero implements MinionListener{
 	 NotYourTurnException, NotEnoughManaException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
-			 if(me.getName().equals("Kalycgos"))
+			 if(me.getName().equals("Kalycgos") && this instanceof Mage)
 			((Card)s).setManaCost(((Card)s).getManaCost()-4);
 		 }
 		 validator.validateManaCost((Card)s);
@@ -115,7 +115,7 @@ public abstract class Hero implements MinionListener{
 	 NotEnoughManaException, InvalidTargetException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
-			 if(me.getName().equals("Kalycgos"))
+			 if(me.getName().equals("Kalycgos") && this instanceof Mage)
 			((Card)s).setManaCost(((Card)s).getManaCost()-4);
 		 }
 		 validator.validateManaCost((Card)s);
@@ -128,7 +128,7 @@ public abstract class Hero implements MinionListener{
 	 NotEnoughManaException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
-			 if(me.getName().equals("Kalycgos"))
+			 if(me.getName().equals("Kalycgos") && this instanceof Mage)
 			((Card)s).setManaCost(((Card)s).getManaCost()-4);
 		 }
 		 validator.validateManaCost((Card)s);
@@ -141,7 +141,7 @@ public abstract class Hero implements MinionListener{
 	 NotEnoughManaException{
 		 validator.validateTurn(this);
 		 for(Minion me: this.getField()) {
-			 if(me.getName().equals("Kalycgos"))
+			 if(me.getName().equals("Kalycgos") && this instanceof Mage)
 			((Card)s).setManaCost(((Card)s).getManaCost()-4);
 		 }
 		 validator.validateManaCost((Card)s);
@@ -180,7 +180,6 @@ public abstract class Hero implements MinionListener{
 	 }
 	public abstract void buildDeck() throws IOException, CloneNotSupportedException;
 	public void onMinionDeath(Minion m) {
-		if(!this.getField().isEmpty())
 		this.getField().remove(m);
 	}
 

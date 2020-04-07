@@ -36,10 +36,11 @@ public class Game implements ActionValidator, HeroListener  {
 		opponent= currentHero==firstHero?secondHero:firstHero;
 		currentHero.setCurrentManaCrystals(1);
 		currentHero.setTotalManaCrystals(1);
+		
 		for(int i=0;i<3;i++)
-		currentHero.getHand().add(currentHero.drawCard());
+			currentHero.drawCard();
 		for(int i=0;i<4;i++)
-			opponent.getHand().add(opponent.drawCard());
+			opponent.drawCard();
 		
 	}
 
@@ -61,9 +62,13 @@ public class Game implements ActionValidator, HeroListener  {
 	@Override
 	public void validateAttack(Minion attacker, Minion target)
 			throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
-		for(Minion a : opponent.getField()) {
-			if(a.isTaunt() && !target.isTaunt())
+		if(!target.isTaunt()) 
+		{
+		for(Minion a : opponent.getField())
+		{
+			if(a.isTaunt())
 				throw new TauntBypassException();
+		}
 		}
 		if(attacker.getAttack()==0)
 			throw new CannotAttackException();
@@ -77,10 +82,7 @@ public class Game implements ActionValidator, HeroListener  {
 			throw new InvalidTargetException();
 		if(!opponent.getField().contains(target))
 			throw new NotSummonedException();
-		
-		
 	}
-
 	@Override
 	public void validateAttack(Minion attacker, Hero target)
 			throws CannotAttackException, NotSummonedException, TauntBypassException, InvalidTargetException {
@@ -142,11 +144,15 @@ public class Game implements ActionValidator, HeroListener  {
 	}
 
 	@Override
-	public void endTurn() throws FullHandException, CloneNotSupportedException {
-		if(firstHero==currentHero) {
+	public void endTurn() throws FullHandException, CloneNotSupportedException 
+	{
+		if(firstHero==currentHero) 
+		{
 			opponent=firstHero;
 			currentHero=secondHero;
-		}else {
+		}
+		else 
+		{
 			currentHero=firstHero;
 			opponent=secondHero;
 		}
@@ -157,9 +163,7 @@ public class Game implements ActionValidator, HeroListener  {
 			for(Minion a:currentHero.getField()) {
 				a.setAttacked(false);
 				a.setSleeping(false);
-				}
-			
-		
+				}	
 	}
 
 	

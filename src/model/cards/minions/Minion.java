@@ -14,12 +14,12 @@ public class Minion extends Card implements Cloneable {
 	private boolean divine;
 	private boolean sleeping;
 	private boolean attacked;
-	@SuppressWarnings("unused")
 	private MinionListener listener;
 
 	public void setListener(MinionListener listener) {
 		this.listener = listener;
 	}
+
 
 	public Minion(String name, int manaCost, Rarity rarity, int attack, int maxHP, boolean taunt, boolean divine,
 			boolean charge) {
@@ -33,24 +33,31 @@ public class Minion extends Card implements Cloneable {
 			this.sleeping = true;
 	}
 	public void attack(Minion target) {
-		if(target.divine) {
+		if(target.divine) 
+		{
 			if(this.attack!=0)
-			target.divine=false;
-			if(this.divine) {
+				target.divine=false;
+			if(this.divine) 
+			{
 				if(target.attack==0)
 					return;
 				this.divine=false;
-				return;}
+				return;
+				}
 			else
 				this.currentHP-=target.attack;
 			return;
-		}else {
+		}
+		else 
+		{
 			target.currentHP-=this.attack;
-			if(this.divine) {
+			if(this.divine)
+			{
 				if(target.attack==0)
 					return;
 				this.divine=false;
-				return;}
+				return;
+				}
 			else
 				this.currentHP-=target.attack;
 		}
@@ -95,7 +102,6 @@ public class Minion extends Card implements Cloneable {
 		}
 		if(this.getCurrentHP()==0)
 			listener.onMinionDeath(this);
-			System.out.println(this.listener);
 	}
 
 	public int getAttack() {

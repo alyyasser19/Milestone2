@@ -41,9 +41,12 @@ public class Priest extends Hero {
 			FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 		int heal= 2;
+		if(!this.getField().isEmpty())
+		{
 		for(Minion M: this.getField()) {
 			if(M.getName().equals("Prophet Velen"))
 				heal=8;
+		}
 		}
 		if(target instanceof Minion) {
 			Minion m= (Minion)target;
@@ -56,9 +59,12 @@ public class Priest extends Hero {
 	FullHandException, FullFieldException, CloneNotSupportedException {
 super.useHeroPower();
 int heal= 2;
+if(!this.getField().isEmpty())
+{
 for(Minion M: this.getField()) {
 	if(M.getName().equals("Prophet Velen"))
 		heal=8;
+}
 }
 target.setCurrentHP(target.getCurrentHP()+heal);
 	}

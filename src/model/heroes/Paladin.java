@@ -20,6 +20,7 @@ public class Paladin extends Hero {
 			FullHandException, FullFieldException, CloneNotSupportedException {
 		super.useHeroPower();
 		Minion recruit = new Minion("Silver Hand Recruit", 1, Rarity.BASIC, 1, 1, false, false, false);
+		recruit.setListener(this);
 		if(getField().size()==7)
 			throw new FullFieldException();
 		else {

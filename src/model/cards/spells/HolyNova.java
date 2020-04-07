@@ -17,6 +17,8 @@ public class HolyNova extends Spell implements AOESpell {
 			int x=oppField.size();
 			int i=0;
 			while(i<x){
+				if(!oppField.get(i).isDivine()) 
+				{
 				if(oppField.get(i).getCurrentHP()<=2){
 					oppField.remove(i);
 					x=oppField.size();
@@ -26,7 +28,13 @@ public class HolyNova extends Spell implements AOESpell {
 					i++;
 					}
 				
-			}
+				}
+				else
+				{
+					oppField.get(i).setDivine(false);
+					i++;
+				}
+				}
 		}
 		if(!curField.isEmpty()){
 		for(int i=0;i<curField.size();i++) {
